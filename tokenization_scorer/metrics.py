@@ -75,7 +75,7 @@ def _shannon_efficiency(text, **kwargs):
     # override observed vocabulary size
     if "vocab" in kwargs:
         vocab_size = kwargs["vocab"]
-    print(f"Vocabulary size {vocab_size}", file=sys.stderr)
+    # print(f"Vocabulary size {vocab_size}", file=sys.stderr)
     
     return -np.sum(word_probs * np.log2(word_probs)) / np.log2(vocab_size)
 
