@@ -6,19 +6,20 @@ from .metrics import get_metric
 def score(
     text: Union[str, Generator, List[Generator]],
     metric: str = "renyi",
+    progressbar=False,
     **kwargs
 ) -> float:
     # be generous when parsing the input to allow for list of files and strings
     if type(text) == str:
-        text = [l.split() for l in tqdm.tqdm(text.split("\n"))]
+        text = [l.split() for l in tqdm.tqdm(text.split("\n"), disable=not progressbar, leave=False)]
         line_count = len(text)
     else:
         text, peekable1, peekable2 = itertools.tee(text, 3)
         line_count = len(list(peekable2))  # assumes outer iteration to be lines
         if type(next(peekable1)) != str:
             # flatten once more
-            text = (w for l in text for w in tqdm.tqdm(l))
-        text = (l.rstrip("\n").split() for l in tqdm.tqdm(text))
+            text = (w for l in text for w in tqdm.tqdm(l, disable=not progressbar, leave=False))
+        text = (l.rstrip("\n").split() for l in tqdm.tqdm(text, disable=not progressbar, leave=False))
 
     # cleanup (remove empty lines and words)
     text = (

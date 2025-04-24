@@ -37,7 +37,7 @@ def _renyi_efficiency(text, **kwargs):
     # override observed vocabulary size
     if "vocab" in kwargs:
         vocab_size = kwargs["vocab"]
-    print(f"Vocabulary size {vocab_size}", file=sys.stderr)
+    # print(f"Vocabulary size {vocab_size}", file=sys.stderr)
 
     val = scale * np.log2(np.sum(
         np.array(word_probs) ** kwargs["power"]
